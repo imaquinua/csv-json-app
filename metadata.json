@@ -1,0 +1,5 @@
+{
+  "name": "Copy of CSV to JSON Converter with Gemini",
+  "description": "An intelligent tool that reads CSV files from social media reports, uses the Gemini API to understand the structure and data types, and converts the data into a clean, structured JSON format, ready for further processing and dashboard creation.",
+  "requestFramePermissions": []
+}
