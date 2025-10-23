@@ -4,9 +4,41 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta name="description" content="Convert CSV files to JSON format using Google Gemini AI - Intelligent data transformation" />
+    <meta name="theme-color" content="#1f2937" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>CSV to JSON Converter with Gemini</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom scrollbar styles for better mobile experience */
+      .scrollbar-thin::-webkit-scrollbar {
+        height: 6px;
+        width: 6px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-track {
+        background: #1f2937;
+        border-radius: 3px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb {
+        background: #4b5563;
+        border-radius: 3px;
+      }
+      .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+      }
+      /* Smooth scrolling for touch devices */
+      * {
+        -webkit-overflow-scrolling: touch;
+      }
+      /* Prevent text size adjustment on mobile */
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+    </style>
   <script type="importmap">
 {
   "imports": {

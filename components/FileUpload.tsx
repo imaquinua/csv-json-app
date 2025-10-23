@@ -63,8 +63,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange, fileName }
       onDragLeave={handleDragLeave}
       onDragOver={handleDragOver}
       onDrop={handleDrop}
-      className={`flex flex-col items-center justify-center p-6 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-200
-        ${isDragging ? 'border-purple-500 bg-gray-700' : 'border-gray-600 hover:border-purple-500 hover:bg-gray-700/50'}`}
+      className={`flex flex-col items-center justify-center p-4 sm:p-6 md:p-8 border-2 border-dashed rounded-lg cursor-pointer transition-colors duration-200 min-h-[150px] sm:min-h-[180px] touch-manipulation
+        ${isDragging ? 'border-purple-500 bg-gray-700' : 'border-gray-600 hover:border-purple-500 hover:bg-gray-700/50 active:bg-gray-700/50'}`}
     >
       <input
         type="file"
@@ -73,17 +73,17 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange, fileName }
         accept=".csv"
         className="hidden"
       />
-      <div className="flex flex-col items-center text-center">
+      <div className="flex flex-col items-center text-center w-full px-2">
         <UploadIcon />
         {fileName ? (
           <>
-            <p className="mt-2 text-lg font-semibold text-green-400">File Selected:</p>
-            <p className="text-sm text-gray-300 break-all">{fileName}</p>
+            <p className="mt-2 text-base sm:text-lg font-semibold text-green-400">File Selected:</p>
+            <p className="text-xs sm:text-sm text-gray-300 break-all max-w-full">{fileName}</p>
           </>
         ) : (
           <>
-            <p className="mt-2 text-lg font-semibold text-gray-300">Drag & drop a CSV file here</p>
-            <p className="text-sm text-gray-500">or click to select a file</p>
+            <p className="mt-2 text-base sm:text-lg md:text-xl font-semibold text-gray-300">Drag & drop a CSV file here</p>
+            <p className="text-xs sm:text-sm text-gray-500 mt-1">or click to select a file</p>
           </>
         )}
       </div>
