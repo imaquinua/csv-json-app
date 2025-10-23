@@ -1,6 +1,7 @@
 
-import React, from 'react';
+import React from 'react';
 import { useState } from 'react';
+import Papa from 'papaparse';
 import { FileUpload } from './components/FileUpload';
 import { CsvPreview } from './components/CsvPreview';
 import { JsonOutput } from './components/JsonOutput';
@@ -41,21 +42,24 @@ export default function App() {
 
   const previewCsv = (text: string) => {
     try {
-      const lines = text.trim().split(/\r?\n/);
-      if (lines.length < 2) {
-        setParsedCsv([]);
-        return;
-      }
-      const headers = lines[0].split(',').map(h => h.trim());
-      const previewRows = lines.slice(1, 6).map(line => {
-        // A simple parser for preview, not robust for values with commas.
-        const values = line.split(',').map(v => v.trim());
-        return headers.reduce((obj, header, index) => {
-          obj[header] = values[index] || '';
-          return obj;
-        }, {} as ParsedCsvRow);
+      Papa.parse(text, {
+        header: true,
+        skipEmptyLines: true,
+        complete: (results) => {
+          if (results.errors.length > 0) {
+            setError('Could not parse CSV for preview. The file might be malformed.');
+            setParsedCsv(null);
+            return;
+          }
+          // Show first 5 rows for preview
+          const previewRows = (results.data as ParsedCsvRow[]).slice(0, 5);
+          setParsedCsv(previewRows);
+        },
+        error: () => {
+          setError('Could not parse CSV for preview. The file might be malformed.');
+          setParsedCsv(null);
+        }
       });
-      setParsedCsv(previewRows);
     } catch (e) {
       setError('Could not parse CSV for preview. The file might be malformed.');
       setParsedCsv(null);

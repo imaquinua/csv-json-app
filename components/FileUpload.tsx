@@ -8,6 +8,27 @@ interface FileUploadProps {
   fileName: string | null;
 }
 
+const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB in bytes
+
+const validateFile = (file: File): { valid: boolean; error?: string } => {
+  // Check file extension
+  if (!file.name.toLowerCase().endsWith('.csv')) {
+    return { valid: false, error: 'Please upload a valid .csv file.' };
+  }
+
+  // Check file size
+  if (file.size > MAX_FILE_SIZE) {
+    return { valid: false, error: `File size exceeds 5MB limit. Current size: ${(file.size / 1024 / 1024).toFixed(2)}MB` };
+  }
+
+  // Check MIME type (additional check, but not relied upon solely)
+  if (file.type && file.type !== 'text/csv' && file.type !== 'application/vnd.ms-excel') {
+    return { valid: false, error: 'Invalid file type. Please upload a CSV file.' };
+  }
+
+  return { valid: true };
+};
+
 export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange, fileName }) => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -35,10 +56,12 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange, fileName }
     setIsDragging(false);
     const files = e.dataTransfer.files;
     if (files && files.length > 0) {
-      if (files[0].type === 'text/csv') {
+      const validation = validateFile(files[0]);
+      if (validation.valid) {
         onFileChange(files[0]);
       } else {
-        alert('Please upload a valid .csv file.');
+        alert(validation.error);
+        onFileChange(null);
       }
     }
   };
@@ -46,7 +69,17 @@ export const FileUpload: React.FC<FileUploadProps> = ({ onFileChange, fileName }
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (files && files.length > 0) {
-      onFileChange(files[0]);
+      const validation = validateFile(files[0]);
+      if (validation.valid) {
+        onFileChange(files[0]);
+      } else {
+        alert(validation.error);
+        onFileChange(null);
+        // Reset the input value so the same file can be selected again after error
+        if (fileInputRef.current) {
+          fileInputRef.current.value = '';
+        }
+      }
     } else {
       onFileChange(null);
     }

@@ -14,7 +14,30 @@ View your app in AI Studio: https://ai.studio/apps/drive/1KacGHP621NbLpe9SiyF1Ry
 
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+   ```bash
+   npm install
+   ```
+
+2. Set up your Gemini API Key:
+   - Get your API key from [Google AI Studio](https://ai.google.dev/)
+   - Open [.env.local](.env.local) and replace `your_api_key_here` with your actual API key:
+     ```
+     GEMINI_API_KEY=your_actual_api_key_here
+     ```
+
 3. Run the app:
-   `npm run dev`
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser at [http://localhost:3000](http://localhost:3000)
+
+## Features
+
+- Drag & drop CSV file upload
+- File validation (max 5MB, CSV files only)
+- Robust CSV parsing with support for quoted values and commas
+- AI-powered conversion to JSON using Google Gemini
+- Live preview of CSV data
+- Copy and download JSON output
+- Responsive design
